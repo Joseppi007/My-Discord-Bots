@@ -38,26 +38,36 @@ function toBase(base, value, digits=0) { // Convert a base 10 number to a base a
 }
 
 function colorToValues(color) { // Turns a hex color into integers
-	if (color.length==4) {
-		return {r:toBaseTen(16,color[1])*17,g:toBaseTen(16,color[2])*17,b:toBaseTen(16,color[3])*17};
-	}else if (color.length==7) {
-		return {r:toBaseTen(16,color[1]+color[2]),g:toBaseTen(16,color[3]+color[4]),b:toBaseTen(16,color[5]+color[6])};
+	if (color.length==4) { // short color
+		return {r:toBaseTen(16,color[1])*17,g:toBaseTen(16,color[2])*17,b:toBaseTen(16,color[3])*17,a:255};
+	}else if (color.length==7) { // long color
+		return {r:toBaseTen(16,color[1]+color[2]),g:toBaseTen(16,color[3]+color[4]),b:toBaseTen(16,color[5]+color[6]),a:255};
+	}else if (color.length==5) { // short color with alpha
+		return {r:toBaseTen(16,color[1])*17,g:toBaseTen(16,color[2])*17,b:toBaseTen(16,color[3])*17,a:toBaseTen(16,color[4])*17};
+	}else if (color.length==9) { // long color
+		return {r:toBaseTen(16,color[1]+color[2]),g:toBaseTen(16,color[3]+color[4]),b:toBaseTen(16,color[5]+color[6]),a:toBaseTen(16,color[7]+color[8])};
 	}else{
 		return {r:0,g:0,b:0};//Impropper color input
 	}
 }
 function valuesToColor(values) { // Turns three r g b numbers into a hex color
 	let v = values;
+	if (!v.a) { // alpha channel
+		v.a=255;
+	}
 	v.r = Math.round(v.r);
 	v.g = Math.round(v.g);
 	v.b = Math.round(v.b);
+	v.a = Math.round(v.a);
 	v.r = Math.min(v.r,255);
 	v.g = Math.min(v.g,255);
 	v.b = Math.min(v.b,255);
+	v.a = Math.min(v.a,255);
 	v.r = Math.max(v.r,0);
 	v.g = Math.max(v.g,0);
 	v.b = Math.max(v.b,0);
-	return('#'+toBase(16,v.r,2)+toBase(16,v.g,2)+toBase(16,v.b,2));
+	v.a = Math.max(v.a,0);
+	return('#'+toBase(16,v.r,2)+toBase(16,v.g,2)+toBase(16,v.b,2)+toBase(16,v.a,2));
 }
 function startImage(clear=false) { // Create a canvas
 	const canvas = Canvas.createCanvas(width, height);
