@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
-const token = "NzE3MDEzODY3OTE3NzM4MDA5.Xteyog.0Jfdl_jNI4pQuJDgr8UoG4B03x4";
+const fs = require("fs");
+const token = fs.readFileSync('./token.txt', 'UTF-8');
 const prefix = '!'; // The character before the commands
 
 let headers = [];
