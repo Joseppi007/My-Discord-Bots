@@ -1,0 +1,99 @@
+function makeFurry (snoot_length=75,snoot_height=25,mouth_tilt=0/*1=smile -1=frown*/,eyebrow_tilt=0/*degrees*/,eyebrow_height=25,ear_height=50,eye_direction=0/*degrees*/,show=true,outline_color="#ffffff",fill_color="#000000",x=100,y=100,canv=startImage(true)) {
+	let ctx = canv.getContext('2d');
+	ctx.lineWidth = 5;
+
+	//Snoot&Ears
+	ctx.beginPath();
+	ctx.strokeStyle=outline_color;
+	ctx.fillStyle=fill_color;
+	ctx.moveTo(x+12,y+12.5*2**0.5);
+	ctx.lineTo(x+12+snoot_length,y+25);
+	ctx.lineTo(x+12+snoot_length-10,y+25+snoot_height);
+	ctx.lineTo(x-50,y+25+snoot_height);
+	ctx.lineTo(x-50,y-35-ear_height);
+	ctx.lineTo(x-25,y-35);
+	ctx.lineTo(x-25,y-35-ear_height);
+	ctx.lineTo(x,y-35);
+	ctx.lineTo(x+12,y+12.5*2**0.5);
+	ctx.fill();
+	ctx.stroke();
+
+	//Mouth
+	ctx.beginPath();
+	ctx.strokeStyle=outline_color;
+	ctx.moveTo(x+12+snoot_length-5,y+25+snoot_height/2);
+	ctx.lineTo(x+12,y+25+snoot_height/2-mouth_tilt*(snoot_height/5));
+	ctx.stroke();
+
+	//Eyebrows
+	//Left
+	ctx.beginPath();
+	ctx.strokeStyle=outline_color;
+	ctx.ellipse(x+25,y-eyebrow_height,25,25,0,Math.PI*(1.25+eyebrow_tilt/180),Math.PI*(1.75+eyebrow_tilt/180));
+	//ctx.fill(); // Liz doesn't like this part.
+	ctx.stroke();
+	//Right
+	ctx.beginPath();
+	ctx.fillStyle=fill_color;
+	ctx.strokeStyle=outline_color;
+	ctx.ellipse(x,y-eyebrow_height,25,25,0,Math.PI*(1.25-eyebrow_tilt/180),Math.PI*(1.75-eyebrow_tilt/180));
+	//ctx.fill(); // Liz doesn't like this part.
+	ctx.stroke();
+
+	//Puple Direction Maths
+	let puple_maths = {
+		x:Math.cos(Math.PI*eye_direction/180)*10,
+		y:Math.sin(Math.PI*eye_direction/180)*10
+	};
+
+	//Left Eye
+	//Outside
+	ctx.beginPath();
+	ctx.fillStyle=outline_color;
+	ctx.ellipse(x+25,y,25,25,0,0,Math.PI*2);
+	ctx.fill();
+	//Inside
+	ctx.beginPath();
+	ctx.fillStyle=fill_color;
+	ctx.ellipse(x+25,y,20,20,0,0,Math.PI*2);
+	ctx.fill();
+	//Puple
+	ctx.beginPath();
+	ctx.fillStyle=outline_color;
+	ctx.ellipse(x+25+puple_maths.x,y+puple_maths.y,10,10,0,0,Math.PI*2);
+	ctx.fill();
+
+	//Right Eye
+	//Outside
+	ctx.beginPath();
+	ctx.fillStyle=outline_color;
+	ctx.ellipse(x,y,25,25,0,0,Math.PI*2);
+	ctx.fill();
+	//Inside
+	ctx.beginPath();
+	ctx.fillStyle=fill_color;
+	ctx.ellipse(x,y,20,20,0,0,Math.PI*2);
+	ctx.fill();
+	//Puple
+	ctx.beginPath();
+	ctx.fillStyle=outline_color;
+	ctx.ellipse(x+puple_maths.x,y+puple_maths.y,10,10,0,0,Math.PI*2);
+	ctx.fill(); 
+
+	if (show) {
+		showImage(canv);
+	}
+	return canv
+}
+
+function helpFurry () {
+	say("makeFurry (snoot_length=75,snoot_height=25,mouth_tilt=0/*1=smile -1=frown*/,eyebrow_tilt=0/*degrees*/,eyebrow_height=25,ear_height=50,eye_direction=0/*degrees*/,show=true,outline_color='#ffffff',fill_color='#000000',x=100,y=100,canv=startImage(true))\nexampleFurry ()");
+}
+
+function furryHelp () {
+	helpFurry();
+}
+
+function exampleFurry () {
+	say("!makeFurry 75 25 0 0 15 50 0 true '#440022' '#ff0088' width/2 height/2");
+}

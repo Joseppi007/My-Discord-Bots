@@ -1,0 +1,36 @@
+if (globals.votes==undefined) {
+  globals.votes=[
+    {name:"Minecraft (Sky Factory)",votes:0},
+    {name:"Minecraft (Vanilla)",votes:0},
+    {name:"Jackbox",votes:0},
+    {name:"Among Us",votes:0},
+    {name:"Scrap Mechanic",votes:0},
+    {name:"Magicka",votes:0},
+    {name:"Terraria",votes:0},
+  ];
+}
+function vote (choice, strength=1) {
+  globals.votes[choice-1].votes+=strength;
+  say("You voted for "+globals.votes[choice-1].name+"!");
+}
+function show_results () {
+  let votes = globals.votes.filter(a=>true); // Make a copy
+  votes.forEach((v)=>{say(v.name+": "+v.votes);});
+  let winner = votes.reduce((a,b)=>{ // Find winner
+    if (a.votes > b.votes) {
+      return a;
+    }else if(a.votes==b.votes){
+      return {name:"tie",votes:a.votes};
+    }else{
+      return b;
+    }
+  },{name:"nothing",votes:0});
+  say("Winner: "+winner.name);
+}
+function start_poll () {//Used to tell users how to vote (Which numbers are what)
+  let i = 0;
+  globals.votes.forEach(v=>{
+    i++;
+    say("Say !vote "+i+" to vote for "+v.name);
+  });
+}

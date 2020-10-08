@@ -1,0 +1,27 @@
+```javascript
+width // The width of all the following canvases and gifs
+height // The height of all the following canvases and gifs
+globals // Store vars between messages // globals.example = "example";
+toBaseTen(base, value) // Go from String "value" as base "base" to a base ten integer
+toBase(base, value, digits=0) // Go from "value" to base "base" - digits = 0 means no limit - digits = x means force x digets
+colorToValues(color) // Turns a hex color into {r:__,g:__,b:__}
+valuesToColor(values) // Turns {r:__,g:__,b:__} into a hex color
+startImage(clear=false) // Create a canvas - "clear" means transparent background
+startGif (framerate=10) // start up a gif - "framerate" means framerate
+gifAddFrame (gif,ctx/*canvas object's context 2d*/) // add a frame to a gif
+showImage(canvas) // Turn a canvas into an image and attach it
+showGif (gif) // Like showImage, but for a gif
+getRole (name) // Get a role
+loadText (filename) // Load a text file (filename.txt)
+saveText (filename, write="") // Save a text file (filename.txt)
+headText (filename) // Load a text file (filename.txt) and make it a header
+say (something) // Used in code rather than console.log because Discord is not the console.
+```
+```
+!run - run code
+!header - create header (define functions)
+!example - show an example
+!docs - shows all this stuff
+!reset - get rid of headers and empty globals
+!___ - run ___() - any aditional arguments will be passed in as parameters
+```
