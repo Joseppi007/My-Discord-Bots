@@ -49,9 +49,9 @@ function makeFurry (snoot_length=75,snoot_height=25,mouth_tilt=0/*1=smile -1=fro
 	//Left Eye
 	//Outside
 	ctx.beginPath();
-	ctx.fillStyle=outline_color;
-	ctx.ellipse(x+25,y,25,25,0,0,Math.PI*2);
-	ctx.fill();
+	ctx.strokeStyle=outline_color;
+	ctx.ellipse(x+25,y,22.5,22.5,0,0,Math.PI*2);
+	ctx.stroke();
 	//Inside
 	ctx.beginPath();
 	ctx.fillStyle=fill_color;
@@ -66,9 +66,9 @@ function makeFurry (snoot_length=75,snoot_height=25,mouth_tilt=0/*1=smile -1=fro
 	//Right Eye
 	//Outside
 	ctx.beginPath();
-	ctx.fillStyle=outline_color;
-	ctx.ellipse(x,y,25,25,0,0,Math.PI*2);
-	ctx.fill();
+	ctx.strokeStyle=outline_color;
+	ctx.ellipse(x,y,22.5,22.5,0,0,Math.PI*2);
+	ctx.stroke();
 	//Inside
 	ctx.beginPath();
 	ctx.fillStyle=fill_color;
