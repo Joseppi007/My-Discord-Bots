@@ -1,0 +1,77 @@
+function turing_help () { // This will show the docs for this
+	say(loadText("turing_docs"));
+}
+
+class Case { // A case has an output, a direction (-1 = left | 1 = right), and the next state's name [No match = end]
+	constructor(output=undefined,direction=0,nextState="end"){
+		this.output=output;
+		this.direction=direction;
+		this.nextState=nextState;
+	}
+}
+
+class State { // A state is an object with an object with each input as the name of the case
+	constructor(cases={}){
+		this.cases = cases;
+	}
+}
+
+class DataStrip { // An infinate strip of data, the default being undefined (Holds positional data)
+	constructor(data=[undefined],index=0){
+		this.data=data;
+		this.index=index;
+	}
+	left(){ // Move the head index left
+		if (this.index==0) {
+			this.data.unshift(undefined);
+		}else{
+			this.index--;
+		}
+	}
+	right(){ // Move the head index right
+		if (this.index==this.data.length-1) {
+			this.data.push(undefined);
+		}
+		this.index++;
+	}
+	read(){
+		return this.data[this.index];
+	}
+	write(data){
+		this.data[this.index]=data;
+	}
+	display(){
+		say(this.data.map(d=>((d==undefined)?'_':d)).join(" "));
+	}
+	copy(){
+		return new DataStrip(this.data, this.index);
+	}
+}
+
+class Turing { // A turing machine head (an object with states and a current state) and gets passed a data strip
+	constructor(states={},start_state="start"){
+		this.states = states;
+		this.state = start_state;
+	}
+	run(d_strip=new DataStrip()){ // Run a data strip
+		let strip = d_strip.copy();
+		while(true){ // Loop until halt
+			if (this.states[this.state]==undefined) { //Halt?
+				break;
+			}
+			let current_case = this.states[this.state].cases[strip.read()];//What do I do now? (The current state's case for this cell)
+			if (current_case==undefined) {
+				say("Halt on state "+this.state+" with data "+strip.read()+".");
+				break;
+			}
+			strip.write(current_case.output);
+			if (current_case.direction==-1) {
+				strip.left();
+			}else if(current_case.direction==1){
+				strip.right();
+			}
+			this.state = current_case.nextState;
+		}
+		strip.display();
+	}
+}

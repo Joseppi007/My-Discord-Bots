@@ -1,0 +1,21 @@
+Here's an example program that swaps 1s and 0s until it runs out and hits an undefined.
+```javascript
+let t = new Turing({
+  "start":new State({
+    0:new Case(1,1,"start"),
+    1:new Case(0,1,"start"),
+    undefined:new Case(undefined,0,"end"),
+  }),
+});
+let ds = new DataStrip([0,1,0,1,0,1]);
+t.run(ds);
+```
+
+How does it work, you may ask? It's simple!
+I have made a Turing Machine simulator that can be given data strips to run.
+
+There are a few classes to keep in mind:
+`Case` which takes `output` (data to write), `direction` (-1 = left | 1 = right), and `nextState` (the name of it as a string) in it's constructor.
+`State` which takes an object `cases` where each item's name is the input, and it's contents is a `Case`.
+`DataStrip` which takes an array `data` and an `index` (default 0). This is passed into the `Turing`'s method 'run'.
+`Turing` which takes an object `states` where the names are the states' names, and the contents are `State`, as well as `start_state` (default: "start").
